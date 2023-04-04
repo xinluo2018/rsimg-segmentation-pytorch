@@ -1,0 +1,12 @@
+## data
+data/s1-dset/
+data/s2-dset/
+
+## the trained model
+model_trained/*.pth
+
+## the other
+.venv
+.vscode
+.DS_Store
+*__pycache__/
