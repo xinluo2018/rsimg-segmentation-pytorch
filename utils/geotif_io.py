@@ -18,7 +18,7 @@ def readTiff(path_in):
     RS_Data=gdal.Open(path_in)
     im_col = RS_Data.RasterXSize  # 
     im_row = RS_Data.RasterYSize  # 
-    im_bands =RS_Data.RasterCount  # 
+    im_bands =RS_Data.RasterCount # 
     im_geotrans = RS_Data.GetGeoTransform()  # 
     im_proj = RS_Data.GetProjection()  # 
     img_array = RS_Data.ReadAsArray(0, 0, im_col, im_row)  # 

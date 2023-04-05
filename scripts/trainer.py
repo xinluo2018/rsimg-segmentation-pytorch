@@ -127,7 +127,7 @@ if __name__ == '__main__':
     '''--------- 1. Data loading --------'''
     '''----- 1.1 training data loading (from scenes path) '''
     tra_scenes, tra_truths = read_normalize(paths_img = paths_scene_tra, \
-                                                paths_truth = paths_truth_tra, max_bands = config.max_img, min_bands = config.min_img)
+                                paths_truth = paths_truth_tra, max_bands = config.max_img, min_bands = config.min_img)
 
     ''' ----- 1.2. Training data loading and auto augmentation'''
     tra_dset = threads_scene_dset(scene_list = tra_scenes, \
