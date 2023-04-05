@@ -1,6 +1,3 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7768932.svg)](https://doi.org/10.5281/zenodo.7768932)
-
-
 # rsimg-segmentation-pytorch
 We perform the more easily use of the semantic segmentation models on the remote sensing image with pytorch.  
 <font color='darkorange'>**The user can perform the model training and validation by easily change the parameters in the scripts/config.py file.** </font>
