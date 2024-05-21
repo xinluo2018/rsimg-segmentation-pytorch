@@ -11,8 +11,9 @@ The surface water dataset built based on Sentinel-2 can be used for the quick te
 1) Unet (Simple)  
 2) DeeplabV3Plus [[Paper]](https://arxiv.org/abs/1802.02611)
 3) DeeplabV3Plus with MobileNetV2 backbone 
+5) WatNet [[Paper]](https://www.sciencedirect.com/science/article/pii/S0303243421001793)
 4) HRNet [[Paper]](https://arxiv.org/abs/1908.07919v2)
-5) GMNet 
+5) GMNet [[Paper]](https://www.tandfonline.com/doi/full/10.1080/17538947.2023.2198266)
 
 ## Features
 1) Model training and validation Synchronously (scripts/trainer.py).  

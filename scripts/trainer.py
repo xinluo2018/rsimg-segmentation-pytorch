@@ -17,10 +17,11 @@ from scripts import config
 from dataloader.preprocess import read_normalize
 from utils.metric import oa_binary, miou_binary
 from model_seg.unet import unet
-from model_seg.deeplabv3plus import deeplabv3plus
-from model_seg.deeplabv3plus_mobilev2 import deeplabv3plus_mobilev2
 from model_seg.hrnet import hrnet
+from model_seg.deeplabv3plus import deeplabv3plus
+from model_seg.surface_water.watnet import watnet
 from model_seg.surface_water.gmnet import gmnet
+from model_seg.deeplabv3plus_mobilev2 import deeplabv3plus_mobilev2
 from dataloader.parallel_loader import threads_scene_dset
 from dataloader.loader import patch_tensor_dset, scene_tensor_dset
 
@@ -111,11 +112,13 @@ if __name__ == '__main__':
       model = deeplabv3plus(num_bands=config.num_bands, num_classes=2).to(device)
     elif config.model_name == 'deeplabv3plus_mobilev2':
       model = deeplabv3plus_mobilev2(num_bands=config.num_bands, num_classes=2).to(device) 
+    elif config.model_name == 'watnet':
+      model = watnet(num_bands=config.num_bands, num_classes=2).to(device) 
     elif config.model_name == 'hrnet':
       model = hrnet(num_bands=config.num_bands, num_classes=2).to(device)         
     elif config.model_name == 'gmnet':
-      model = gmnet(num_bands=config.num_bands, num_classes=2,\
-                          scale_high=config.patch_size[0], scale_mid=config.patch_size[1], scale_low=config.patch_size[2]).to(device)
+      model = gmnet(num_bands=config.num_bands, num_classes=2, 
+                    scale_high=config.patch_size[0], scale_mid=config.patch_size[1], scale_low=config.patch_size[2]).to(device)
     print('Model name:', config.model_name)
 
     ## Data paths 

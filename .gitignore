@@ -10,3 +10,5 @@ model_trained/*.pth
 .vscode
 .DS_Store
 *__pycache__/
+
+

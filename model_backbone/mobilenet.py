@@ -1,3 +1,7 @@
+## author: xin luo
+## create: 2024.5.20;  
+## des: backbone model of mobilenetv2
+
 import torch.nn as nn
 import numpy as np
 from torchsummary import summary
@@ -69,25 +73,27 @@ class MobileNetV2(nn.Module):
         self.last_channel = make_divisible(last_channel * width_mult) \
                                         if width_mult > 1.0 else last_channel
         interverted_residual_setting = [
-            # t, c, n, s
-            [1, 16, 1, 1],   
-            [6, 24, 2, 2],      # size -> 1/4
-            [6, 32, 3, 2],      # size -> 1/8
-            [6, 64, 4, 2],      # size -> 1/16
-            [6, 96, 3, 1],    
-            [6, 160, 3, 2],     # size -> 1/32
-            [6, 320, 1, 1],
+            # t, c, n, s: the params of the invert residual block.
+            # t (expansion ratio for the hidden dimension), c (output channel), 
+            # n (repeat block n times), s (stride) 
+            [1, 16, 1, 1],      # inverted_0, size -> 1,    2 conv layers
+            [6, 24, 2, 2],      # inverted_1, size -> 1/2,  6 conv layers
+            [6, 32, 3, 2],      # inverted_2, size -> 1/4,  9 conv layers
+            [6, 64, 4, 2],      # inverted_3, size -> 1/8,  12 conv layers
+            [6, 96, 3, 1],      # inverted_4, size -> 1/8,  9 conv layers
+            [6, 160, 3, 2],     # inverted_5, size -> 1/16, 9 conv layers
+            [6, 320, 1, 1],     # inverted_6, size -> 1/16, 3 conv layers
         ]
 
         # ------head layer------ #
-        self.head = conv3x3_bn_relu6(num_bands,input_channel,2)  # size -> 1/2
+        self.head = conv3x3_bn_relu6(num_bands, input_channel, 2)  # size -> 1/2, 1 conv layer
 
         # ------body layers (consist of inverted residual blocks)------ #
         # self.body = []
         self.body = nn.Sequential()
         for num, (t, c, n, s) in enumerate(interverted_residual_setting):
             output_channel = make_divisible(c * width_mult) if t > 1 else c
-            blocks = []  ## blocks in bottleneck
+            blocks = []         ## blocks in bottleneck
             for i in range(n):
                 if i == 0:
                     blocks.append(block(input_channel, output_channel, s, expand_ratio=t))  
@@ -98,7 +104,7 @@ class MobileNetV2(nn.Module):
 
         # ------tail layer------ # 
         # building last several layers
-        self.tail = conv1x1_bn_relu6(input_channel, self.last_channel)
+        self.tail = conv1x1_bn_relu6(input_channel, self.last_channel)   ## 1 conv layer
 
         # ------classifier------ #
         self.classifier = nn.Linear(self.last_channel, num_classes)
